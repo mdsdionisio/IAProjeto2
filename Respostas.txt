@@ -1,0 +1,27 @@
+Perceptrons – Prática 1
+1.O programa de treinamento funciona sempre ou depende da seqüência de valores informados durante o treinamento?
+    Sim, o programa com essas entradas de dados funcionou corretamente, 
+    não importando a ordem que elas eram colocadas para o treinamento. 
+
+2.Qual o número máximo de interações para corrigir os pesos?
+    Foram testadas todas as 24 possibilidades, com base no resultados foi concluído que
+    no pior dos casos, o algoritmo já conseguia classificar as entradas corretamente na quarta interação.
+    As entradas utilizadas podem ser vistas no arquivo CientistaCompositor.cs e a operação que gerou o pior
+    caso foi ObtenhaPadrao9.
+
+
+Perceptrons – Prática 2
+1.Quantas iterações são necessárias para encontrar os pesos corretos da base de treinamento?
+    Na terceira ele já começou a reconhecer os padrões
+
+2.Qual é o resultado para outros valores?
+    Em ordem foi Gripe,Gripe,Resfriado,Resfriado,Gripe,Gripe
+
+3.O programa parece ter alguma inteligência? Como ele se comporta?
+    Sim, o programa a cada erro ele se ajusta para que na próxima interação ele acerte,
+    então a cada erro ele consegue evitar vários outros que ainda viriam, e para fechar com chave de ouro, 
+    ele consegue identificar até mesmo resultados que nem mesmo ele sabia que existia.
+
+
+Perceptrons - Limitação
+1. O programa consegue achar uma solução? Por quê?
