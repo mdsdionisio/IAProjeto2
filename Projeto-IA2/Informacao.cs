@@ -4,12 +4,12 @@ public class Informacao
     {
         Nome = nome;
         Valor = valor;
-        Resultado = resultado;
+        ResultadoEsperado = resultado;
     }
     public string Nome {get;}
     public int[] Valor {get;}
-    public int Resultado {get;}
+    public int ResultadoEsperado {get;}
     public bool Aprovado {get;set;}
 
-    public override string ToString() => $"Nome: {Nome} , Aprovado: {Aprovado}  , Resultado Esperado: {Resultado}";
+    public override string ToString() => $"Nome: {Nome} , Aprovado: {Aprovado}  , Resultado Esperado: {ResultadoEsperado}";
 }

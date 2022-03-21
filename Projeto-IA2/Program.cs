@@ -6,33 +6,35 @@ var neuronios = listaDados.First().Valor.Select(elemento => new Neuronio()).ToAr
 var bias = new BIAS();
 int contador = 1;
 
-while(TodosValidos(listaDados)){
+while(TemReprovado(listaDados)){
     Console.WriteLine($"Interação {contador} ===================================");
     PrincipalTreino();
     Console.WriteLine("===============================================");
     contador++;
 }
 
-bool TodosValidos(Informacao[] listaDados) => listaDados.Any(l => !l.Aprovado);
+bool TemReprovado(Informacao[] listaDados) => listaDados.Any(l => !l.Aprovado);
 
 void PrincipalTreino(){
     foreach(var dado in listaDados!){
-        int resultado = ObtenhaResultado(dado);
-        if(resultado != dado.Resultado){
+        int resultado = ObtenhaResultado(dado.Valor);
+
+        if(resultado != dado.ResultadoEsperado){
             Console.WriteLine($"Erro: {dado.ToString()} Resultado Obtido: {resultado}");
 
-            AjusteNeuronios(dado.Resultado, resultado);
-            ReseteAprovados();
+            AjusteNeuronios(dado.ResultadoEsperado, resultado);
+            ReproveTodasInformacoes();
                 
             continue;            
         }
+
         dado.Aprovado = true;
         Console.WriteLine($"Aprovado: {dado.ToString()} Resultado Obtido: {resultado}");
     }
-    MostreResultado();
+    MostreNeuroniosResultantes();
 }
 
-void MostreResultado(){
+void MostreNeuroniosResultantes(){
     int x = 0;
     foreach (var neuronio in neuronios){
         Console.WriteLine($"N{x} = W{x} : {neuronio.W}");
@@ -49,24 +51,24 @@ void PrincipalTreinado(){
     bias!.W = 0;
 
     foreach(var dado in listaDados!){
-        string resultado = ObtenhaResultado(dado) ==1?"Refriado": "Gripe";
+        string resultado = ObtenhaResultado(dado.Valor) == 1 ? "Refriado": "Gripe";
         dado.Aprovado = true;
         Console.WriteLine($"Dado: {dado.Nome} Resultado Obtido: {resultado}");
     }
 }
 
-int ObtenhaResultado(Informacao dado)
+int ObtenhaResultado(int[] valor)
 {
     int resultado = 0;
 
-    for(int i = 0; i < dado.Valor.Length; i++){
-        neuronios![i].RecebaInformacao(dado.Valor[i]);
+    for(int i = 0; i < valor.Length; i++){
+        neuronios![i].RecebaInformacao(valor[i]);
         resultado += neuronios[i].Resultado;
     }
 
     resultado = resultado + bias!.Resultado;
 
-    return resultado > 0 ? 1:0;
+    return resultado > 0 ? 1 : 0;
 }
 
 void AjusteNeuronios(int resutaldoEsperado, int resultado)
@@ -78,7 +80,7 @@ void AjusteNeuronios(int resutaldoEsperado, int resultado)
     bias!.AjustePeso(resutaldoEsperado, resultado);
 }
 
-void ReseteAprovados()
+void ReproveTodasInformacoes()
 {
     foreach(var dadoPossiveis in listaDados){
         dadoPossiveis.Aprovado = false;
